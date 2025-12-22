@@ -1,0 +1,15 @@
+langchain
+langchain-core
+langchain-community
+langchain-ollama
+pydantic
+langchain-google-genai
+python-dotenv 
+requests
+joblib
+streamlit
+numpy
+scikit-learn
+matplotlib
+plotly
+pandas
