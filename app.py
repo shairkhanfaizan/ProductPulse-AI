@@ -45,14 +45,14 @@ st.markdown("""
         margin: 1rem 0;
     }
     .wait-box {
-        background: #fff3cd;
+        background: #C9A185;
         border: 2px solid #ffeaa7;
         border-radius: 10px;
         padding: 1.5rem;
         margin: 1rem 0;
     }
     .info-box {
-        background: #d1ecf1;
+        background: #3F704D;
         border: 2px solid #bee5eb;
         border-radius: 10px;
         padding: 1.5rem;
@@ -222,6 +222,10 @@ def create_gauge_chart(confidence):
 # MAIN APP
 # ============================================================================
 
+if "show_balloons" not in st.session_state:
+    st.session_state.show_balloons = False
+
+
 def main():
     # Session state
     if 'results' not in st.session_state:
@@ -310,13 +314,19 @@ def main():
                 results = run_analysis_pipeline(product_input)
             
             status.success("✅ Analysis complete!")
-            st.balloons()
             st.session_state.results = results
+            st.session_state.show_balloons = True
+            st.rerun()
+
             
         except Exception as e:
             status.error(f"❌ Failed: {str(e)}")
             st.exception(e)
             return
+    
+    if st.session_state.get("show_balloons", False):
+        st.balloons()
+        st.session_state.show_balloons = False
     
     # Display Results
     if st.session_state.results:
@@ -334,7 +344,7 @@ def main():
         col1.metric("📦 Product", safe_get(extractor, 'product_name', 'N/A'))
         col2.metric("🏷️ Brand", safe_get(extractor, 'brand', 'N/A'))
         col3.metric("✨ Condition", safe_get(extractor, 'condition', 'N/A'))
-        col4.metric("🎯 Confidence", f"{safe_get(extractor, 'input_confidence', 0)*100:.0f}%")
+   
         
         st.markdown("---")
         

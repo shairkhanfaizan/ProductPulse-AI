@@ -3,12 +3,16 @@ from pydantic import BaseModel, Field
 from langchain_ollama import ChatOllama
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
+from langchain_google_genai import ChatGoogleGenerativeAI
 from schemas.product_schema import ProductSchema
 from prompts.Extractor_prompt import extract_prompt_template
 from typing import Type 
 import traceback
+from dotenv import load_dotenv
+import os
 
-
+load_dotenv()  # Load environment variables from .env file
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY") 
 
 
 # Define the argument schema for the tool
@@ -39,7 +43,8 @@ class Extractor_Tool(BaseTool):
         """
         try:
             # initialize the LLM
-            llm = ChatOllama(model="qwen2.5:7b", temperature=0.7)
+            # llm = ChatOllama(model="qwen2.5:7b", temperature=0.7)
+            llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0.7, api_key=GOOGLE_API_KEY)
             
             # Define the json parser
             json_parser = JsonOutputParser(schema = ProductSchema)

@@ -71,7 +71,6 @@ class Fetcher_Tool(BaseTool):
                 "hl": "en",                                   #host language
                 "gl": product_info.get("market_region"),      #geolocation
                 "num": 5                                      #number of results
-
             }        
                     
             # url for SerpAPI request
